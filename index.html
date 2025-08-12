@@ -1,228 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Management App</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;git
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .container {
-            background: white;
-            width: 400px;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .task-input {
-            display: flex;
-            margin-bottom: 20px;
-        }
-        .task-input input {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px 0 0 5px;
-            outline: none;
-        }
-        .task-input button {
-            padding: 10px 15px;
-            border: none;
-            background: #28a745;
-            color: white;
-            border-radius: 0 5px 5px 0;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .task-input button:hover {
-            background: #218838;
-        }
-        .filters {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 15px;
-        }
-        .filters button {
-            border: none;
-            background: #ddd;
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
-        .filters button.active,
-        .filters button:hover {
-            background: #bbb;
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-        li {
-            background: #fafafa;
-            padding: 10px;
-            border: 1px solid #ddd;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: transform 0.2s ease;
-        }
-        li.completed {
-            text-decoration: line-through;
-            background: #d4edda;
-        }
-        li:hover {
-            transform: scale(1.02);
-        }
-        .actions button {
-            border: none;
-            background: transparent;
-            cursor: pointer;
-            margin-left: 5px;
-        }
-        .edit {
-            color: #007bff;
-        }
-        .delete {
-            color: red;
-        }
-        .complete {
-            color: green;
-        }
-        .task-name[contenteditable="true"] {
-            outline: 1px solid #007bff;
-            background: #eef6ff;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Task Manager</h1>
-        <div class="task-input">
-            <input type="text" id="task" placeholder="Add a new task">
-            <button onclick="addTask()">Add</button>
-        </div>
-        <div class="filters">
-            <button onclick="filterTasks('all')" class="active">All</button>
-            <button onclick="filterTasks('completed')">Completed</button>
-            <button onclick="filterTasks('pending')">Pending</button>
-        </div>
-        <ul id="taskList"></ul>
-    </div>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Task Management App</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				background: #f4f4f4;
+				margin: 0;
+				padding: 0;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				min-height: 100vh;
+			}
+			.container {
+				background: white;
+				width: 700px;
+				padding: 20px;
+				border-radius: 10px;
+				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			}
+			h1 {
+				text-align: center;
+				margin-bottom: 50px;
+			}
+			.task-input {
+				display: flex;
+				margin-bottom: 20px;
+			}
+			.task-input input {
+				flex: 1;
+				padding: 10px;
+				border: 1px solid #ccc;
+				border-radius: 5px 0 0 5px;
+				outline: none;
+			}
+			.task-input button {
+				padding: 10px 15px;
+				border: none;
+				background: #28a745;
+				color: white;
+				border-radius: 0 5px 5px 0;
+				cursor: pointer;
+				transition: background 0.3s;
+			}
+			.task-input button:hover {
+				background: #218838;
+			}
+			.filters {
+				display: flex;
+				justify-content: space-around;
+				margin-bottom: 15px;
+			}
+			.filters button {
+                color: white;
+				border: none;
+				background: #28a745;
+				padding: 15px 15px;
+				cursor: pointer;
+				border-radius: 5px;
+				transition: background 0.3s;
+			}
+			.filters button.active,
+			.filters button:hover {
+				background: #218838;
+			}
+			ul {
+				list-style: none;
+				padding: 0;
+			}
+			li {
+				background: #fafafa;
+				padding: 10px;
+				border: 1px solid #ddd;
+				margin-bottom: 10px;
+				border-radius: 5px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				transition: transform 0.2s ease;
+			}
+			li.completed {
+				text-decoration: line-through;
+				background: #d4edda;
+			}
+			li:hover {
+				transform: scale(1.02);
+			}
+			.actions button {
+				border: none;
+				background: transparent;
+				cursor: pointer;
+				margin-left: 5px;
+			}
+			.edit {
+				color: #007bff;
+			}
+			.delete {
+				color: red;
+			}
+			.complete {
+				color: green;
+			}
+			.task-name[contenteditable="true"] {
+				outline: 1px solid #007bff;
+				background: #eef6ff;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h1>Task Manager</h1>
+			<div class="task-input">
+				<input type="text" id="task" placeholder="Add a new task" />
+				<button onclick="addTask()">Add</button>
+			</div>
+			<div class="filters">
+				<button onclick="filterTasks('all')" class="active">All</button>
+				<button onclick="filterTasks('completed')">Completed</button>
+				<button onclick="filterTasks('pending')">Pending</button>
+			</div>
+			<ul id="taskList"></ul>
+		</div>
 
-    <script>
-        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-        let currentFilter = 'all';
+		<script>
+			let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+			let currentFilter = "all";
 
-        function saveTasks() {
-            localStorage.setItem('tasks', JSON.stringify(tasks));
-        }
+			function saveTasks() {
+				localStorage.setItem("tasks", JSON.stringify(tasks));
+			}
 
-        function renderTasks() {
-            const taskList = document.getElementById('taskList');
-            taskList.innerHTML = '';
-            let filteredTasks = tasks.filter(task => {
-                if (currentFilter === 'all') return true;
-                if (currentFilter === 'completed') return task.completed;
-                if (currentFilter === 'pending') return !task.completed;
-            });
+			function renderTasks() {
+				const taskList = document.getElementById("taskList");
+				taskList.innerHTML = "";
+				let filteredTasks = tasks.filter((task) => {
+					if (currentFilter === "all") return true;
+					if (currentFilter === "completed") return task.completed;
+					if (currentFilter === "pending") return !task.completed;
+				});
 
-            filteredTasks.forEach((task, index) => {
-                let li = document.createElement('li');
-                li.className = task.completed ? 'completed' : '';
+				filteredTasks.forEach((task, index) => {
+					let li = document.createElement("li");
+					li.className = task.completed ? "completed" : "";
 
-                let taskSpan = document.createElement('span');
-                taskSpan.className = 'task-name';
-                taskSpan.textContent = task.name;
-                taskSpan.ondblclick = () => enableEdit(taskSpan, index);
+					let taskSpan = document.createElement("span");
+					taskSpan.className = "task-name";
+					taskSpan.textContent = task.name;
+					taskSpan.ondblclick = () => enableEdit(taskSpan, index);
 
-                let actionsDiv = document.createElement('div');
-                actionsDiv.className = 'actions';
+					let actionsDiv = document.createElement("div");
+					actionsDiv.className = "actions";
 
-                let completeBtn = document.createElement('button');
-                completeBtn.className = 'complete';
-                completeBtn.textContent = '✔️';
-                completeBtn.onclick = () => toggleStatus(index);
+					let completeBtn = document.createElement("button");
+					completeBtn.className = "complete";
+					completeBtn.textContent = "✔️";
+					completeBtn.onclick = () => toggleStatus(index);
 
-                let editBtn = document.createElement('button');
-                editBtn.className = 'edit';
-                editBtn.textContent = '✏️';
-                editBtn.onclick = () => enableEdit(taskSpan, index);
+					let editBtn = document.createElement("button");
+					editBtn.className = "edit";
+					editBtn.textContent = "✏️";
+					editBtn.onclick = () => enableEdit(taskSpan, index);
 
-                let deleteBtn = document.createElement('button');
-                deleteBtn.className = 'delete';
-                deleteBtn.textContent = '🗑️';
-                deleteBtn.onclick = () => deleteTask(index);
+					let deleteBtn = document.createElement("button");
+					deleteBtn.className = "delete";
+					deleteBtn.textContent = "🗑️";
+					deleteBtn.onclick = () => deleteTask(index);
 
-                actionsDiv.appendChild(completeBtn);
-                actionsDiv.appendChild(editBtn);
-                actionsDiv.appendChild(deleteBtn);
+					actionsDiv.appendChild(completeBtn);
+					actionsDiv.appendChild(editBtn);
+					actionsDiv.appendChild(deleteBtn);
 
-                li.appendChild(taskSpan);
-                li.appendChild(actionsDiv);
-                taskList.appendChild(li);
-            });
-        }
+					li.appendChild(taskSpan);
+					li.appendChild(actionsDiv);
+					taskList.appendChild(li);
+				});
+			}
 
-        function addTask() {
-            const taskInput = document.getElementById('task');
-            const taskName = taskInput.value.trim();
-            if (taskName) {
-                tasks.push({ name: taskName, completed: false });
-                saveTasks();
-                renderTasks();
-                taskInput.value = '';
-            }
-        }
+			function addTask() {
+				const taskInput = document.getElementById("task");
+				const taskName = taskInput.value.trim();
+				if (taskName) {
+					tasks.push({ name: taskName, completed: false });
+					saveTasks();
+					renderTasks();
+					taskInput.value = "";
+				}
+			}
 
-        function toggleStatus(index) {
-            tasks[index].completed = !tasks[index].completed;
-            saveTasks();
-            renderTasks();
-        }
+			function toggleStatus(index) {
+				tasks[index].completed = !tasks[index].completed;
+				saveTasks();
+				renderTasks();
+			}
 
-        function deleteTask(index) {
-            tasks.splice(index, 1);
-            saveTasks();
-            renderTasks();
-        }
+			function deleteTask(index) {
+				tasks.splice(index, 1);
+				saveTasks();
+				renderTasks();
+			}
 
-        function enableEdit(span, index) {
-            span.contentEditable = true;
-            span.focus();
-            span.onblur = () => {
-                let newText = span.textContent.trim();
-                if (newText) {
-                    tasks[index].name = newText;
-                    saveTasks();
-                }
-                span.contentEditable = false;
-                renderTasks();
-            };
-        }
+			function enableEdit(span, index) {
+				span.contentEditable = true;
+				span.focus();
+				span.onblur = () => {
+					let newText = span.textContent.trim();
+					if (newText) {
+						tasks[index].name = newText;
+						saveTasks();
+					}
+					span.contentEditable = false;
+					renderTasks();
+				};
+			}
 
-        function filterTasks(filter) {
-            currentFilter = filter;
-            document.querySelectorAll('.filters button').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            renderTasks();
-        }
+			function filterTasks(filter) {
+				currentFilter = filter;
+				document
+					.querySelectorAll(".filters button")
+					.forEach((btn) => btn.classList.remove("active"));
+				event.target.classList.add("active");
+				renderTasks();
+			}
 
-        renderTasks();
-    </script>
-</body>
+			renderTasks();
+		</script>
+	</body>
 </html>
